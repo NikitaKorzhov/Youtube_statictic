@@ -2,15 +2,21 @@
   <head>
     <meta charset="utf-8"> 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      #stat{
+        display: none;
+      }
+    </style>
     <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
   </head>
   <body>
-<div class="row">
-  <div class="col-sm-6" id="list"></div>
+<div class="row" id="an" style="display: none;">
+  <div class="col-sm-6" id="list"><h4>Все лайкнутые видео</h4></div>
   <div class="col-sm-6" id="list1">
+    <h4>Рейтинг каналов по моим лайкам</h4>
     <script id="channelTemplate" type="text/x-jquery-tmpl">
       <div class="row">
-        <div class="col-sm-4">><img src="${picture}" style="width:88px;height:88px;" class="rounded-circle" alt="Cinque Terre" width="304" height="236"> </div>
+        <div class="col-sm-4"><img src="${picture}" style="width:88px;height:88px;" class="rounded-circle" alt="Cinque Terre" width="304" height="236"> </div>
         <div class="col-sm-8"> <h4 ><a href="${url}">${chanal} - ${count} лайков</h4></a><p>${subscribers} поодписчиков</p></div>
       </div>
       <div>${description}</div>
@@ -26,7 +32,7 @@
 <script src="script.js"></script>
 
 <button class="btn btn-danger" id="first">Авторизация</button>
-<button class="btn btn-primary"id="stat">Анализ активности</button>
+<button class="btn btn-primary" id="stat">Анализ активности</button>
 
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

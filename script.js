@@ -4,7 +4,7 @@ $(document).ready(()=>{
     function authenticate() {
         return gapi.auth2.getAuthInstance()
             .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-            .then(function() { console.log("Sign-in successful"); },
+            .then(function() { console.log("Sign-in successful");$("#first").hide();$("#stat").show() },
                   function(err) { console.error("Error signing in", err); });
       }
       function loadClient() {
@@ -22,8 +22,32 @@ $(document).ready(()=>{
         return await gapi.client.youtube.channels.list(request_params).then(response=>response.result.items)
     }
     push= function(item){
-      return {chanal:item.channelTitle,description:item.description_c,channelId:item.channelId,subscribers:item.subscriber_c,picture:item.picture_c,count:1,url:`https://www.youtube.com/channel/${item.channelId}`}
+      return {chanal:item.channelTitle,channelId:item.channelId,count:1}
     }  
+    
+getChannels= async function(items){
+    for(i=0;i<parseInt(items.length);i+=50){
+    let t="";
+    for(j=i;j<i+50;j++){
+      if(j!=i){t+=","}
+    if(j<items.length){
+    t+=items[j].channelId;
+    }
+    }
+    c=await chanalInfo(t);
+    c.map(el=>{
+      items.forEach(item=>{
+        if(item.channelId==el.id){
+          item.description=el.snippet.description
+          item.subscribers=el.statistics.subscriberCount
+          item.picture=el.snippet.thumbnails.default.url
+          item.url=`https://www.youtube.com/channel/${item.channelId}`
+        }
+      })
+    })
+   }
+    return items;
+}
      var ff=function(items){
     let  u=[]
     items.map(  el=>{
@@ -47,19 +71,7 @@ $(document).ready(()=>{
           npt!=""?params.pageToken=npt:"";
           result=await gapi.client.youtube.videos.list(params).then(response=>response.result);
           npt=result.nextPageToken;     
-          o=""
-        result.items.map(el=>o+=el.snippet.channelId+",")
-        c=await chanalInfo(o.substring(0,o.length-1));
-         for(u=0;u<result.items.length;u++){
-            c.map(ttt=>{
-                if(ttt.id==result.items[u].snippet.channelId){
-                    result.items[u].snippet.description_c=ttt.snippet.description
-                    result.items[u].snippet.subscriber_c=ttt.statistics.subscriberCount
-                    result.items[u].snippet.picture_c=ttt.snippet.thumbnails.default.url
-                }
-                
-                })
-          }
+        
           result.items.map(y=>leked_videos.push(y))  
         }
         return leked_videos;
@@ -68,8 +80,11 @@ $(document).ready(()=>{
         return fragen(5)
             .then(function(response) {
                     let s= ff(response)
-                    s.forEach(element => element.persent=element.count*100/response.length);
-                    s.map(el=>$("#channelTemplate").tmpl(el).appendTo("#list1"));
+                    getChannels(s).then(u=>{
+                      u.forEach(element => element.persent=element.count*100/response.length);
+                      $("#an").show();
+                      u.map(el=>$("#channelTemplate").tmpl(el).appendTo("#list1"))
+                    });
                    response.map(item=>$("#list").append(`<p>${item.snippet.title}</p>`));    
                   },
                   function(err) { console.error("Execute error", err); });
