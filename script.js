@@ -77,6 +77,8 @@ getChannels= async function(items){
         return leked_videos;
       }   
       function execute() {
+        $("#stat").hide();
+        $("#wait").show();
         return fragen(5)
             .then(function(response) {
                     let s= ff(response)
@@ -86,6 +88,7 @@ getChannels= async function(items){
                       u.map(el=>$("#channelTemplate").tmpl(el).appendTo("#list1"))
                     });
                    response.map(item=>$("#list").append(`<p>${item.snippet.title}</p>`));    
+                   $("#wait").hide();
                   },
                   function(err) { console.error("Execute error", err); });
       }
