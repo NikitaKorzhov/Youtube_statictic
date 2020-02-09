@@ -1,24 +1,32 @@
 <html>
-  <head>
-    <meta charset="utf-8"> 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-      #stat{
-        display: none;
-      }
-      #wait{
-        display: none;
-      }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-  </head>
-  <body>
-    <div id="wait"><h1>Подождите пожалуйста</h1></div>
-<div class="row" id="an" style="display: none;">
-  <div class="col-sm-6" id="list"><h4>Все лайкнутые видео</h4></div>
-  <div class="col-sm-6" id="list1">
-    <h4>Рейтинг каналов по моим лайкам</h4>
-    <script id="channelTemplate" type="text/x-jquery-tmpl">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    #stat {
+      display: none;
+    }
+
+    #wait {
+      display: none;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+</head>
+
+<body>
+  <div id="wait">
+    <h1>Подождите пожалуйста</h1>
+  </div>
+  <div class="row" id="an" style="display: none;">
+    <div class="col-sm-6" id="list">
+      <h4>Все лайкнутые видео</h4>
+    </div>
+    <div class="col-sm-6" id="list1">
+      <h4>Рейтинг каналов по моим лайкам</h4>
+      <script id="channelTemplate" type="text/x-jquery-tmpl">
       <div class="row">
         <div class="col-sm-4"><img src="${picture}" style="width:88px;height:88px;" class="rounded-circle" alt="Cinque Terre" width="304" height="236"> </div>
         <div class="col-sm-8"> <h4 ><a href="${url}">${chanal} - ${count} лайков</h4></a><p>${subscribers} поодписчиков</p></div>
@@ -28,18 +36,23 @@
             <div class="progress-bar" role="progressbar" style="width: ${persent}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${parseInt(persent)}%</div>
       </div>
   </script>
+    </div>
   </div>
-</div>
 
-<script src="https://apis.google.com/js/api.js"></script>
-<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
-<script src="script.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+  <script src="script.js"></script>
 
-<button class="btn btn-danger" id="first">Авторизация</button>
-<button class="btn btn-primary" id="stat">Анализ активности</button>
+  <button class="btn btn-danger" id="first">Авторизация</button>
+  <button class="btn btn-primary" id="stat">Анализ активности</button>
 
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
