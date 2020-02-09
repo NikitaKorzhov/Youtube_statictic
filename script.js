@@ -22,7 +22,7 @@ $(document).ready(() => {
     return await gapi.client.youtube.channels.list(request_params).then(response => response.result.items)
   }
   push = function (item) {
-    return { chanal: item.channelTitle, channelId: item.channelId, count: 1 }
+    return { chanal: item.snippet.channelTitle, channelId: item.snippet.channelId, videos: [{ id: item.id, title: item.snippet.title }], count: 1 }
   }
 
   getChannels = async function (items) {
@@ -48,19 +48,24 @@ $(document).ready(() => {
     }
     return items;
   }
-  var ff = function (items) {
-    let u = []
+  var formStatistics = function (items) {
+    let statistics_list = []
     items.map(el => {
-      if (u.some(ii => ii.channelId === el.snippet.channelId)) {
-        u.map(it => it.channelId === el.snippet.channelId ? it.count++ : "")
+      if (statistics_list.some(ii => ii.channelId === el.snippet.channelId)) {
+        statistics_list.map(it => {
+          if (it.channelId === el.snippet.channelId) {
+            it.count++
+            it.videos.push({ id: el.id, title: el.snippet.title })
+          }
+        })
       }
       else {
-        aaa = push(el.snippet)
-        u.push(aaa)
+        aaa = push(el)
+        statistics_list.push(aaa)
       }
     })
-    u.sort((a, b) => a.count < b.count ? 1 : -1)
-    return u
+    statistics_list.sort((a, b) => a.count < b.count ? 1 : -1)
+    return statistics_list
   }
 
   fragen = async function (j) {
@@ -71,7 +76,6 @@ $(document).ready(() => {
       npt != "" ? params.pageToken = npt : "";
       result = await gapi.client.youtube.videos.list(params).then(response => response.result);
       npt = result.nextPageToken;
-
       result.items.map(y => leked_videos.push(y))
     }
     return leked_videos;
@@ -81,11 +85,12 @@ $(document).ready(() => {
     $("#wait").show();
     return fragen(5)
       .then(function (response) {
-        let s = ff(response)
+        let s = formStatistics(response)
+        console.log(s)
         getChannels(s).then(u => {
           u.forEach(element => element.persent = element.count * 100 / response.length);
           $("#an").show();
-          response.map(item => $("#list").append(`<p>${item.snippet.title}</p>`));
+          //    response.map(item => $("#list").append(`<p>${item.snippet.title}</p>`));
           u.map(el => $("#channelTemplate").tmpl(el).appendTo("#list1"))
         }).then($("#wait").hide());
       },
