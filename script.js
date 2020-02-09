@@ -68,14 +68,19 @@ $(document).ready(() => {
     return statistics_list
   }
 
-  fragen = async function (j) {
+  fragen = async function () {
+    let iterator = 1;
     let leked_videos = []
     npt = ""
     params = { "part": "snippet,contentDetails,statistics", "maxResults": 50, "myRating": "like" }
-    for (i = 0; i < j; i++) {
+
+    for (i = 0; i < iterator; i++) {
+      console.log(iterator + " " + i)
       npt != "" ? params.pageToken = npt : "";
       result = await gapi.client.youtube.videos.list(params).then(response => response.result);
       npt = result.nextPageToken;
+      iterator = parseInt(1 + (result.pageInfo.totalResults / 50));
+
       result.items.map(y => leked_videos.push(y))
     }
     return leked_videos;
@@ -83,7 +88,7 @@ $(document).ready(() => {
   function execute() {
     $("#stat").hide();
     $("#wait").show();
-    return fragen(5)
+    return fragen()
       .then(function (response) {
         let s = formStatistics(response)
         console.log(s)
